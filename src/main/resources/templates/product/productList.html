@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>상품 목록</title>
+</head>
+
+<body>
+	<table>
+		<th>no</th>
+		<th>name</th>
+		<th>price</th>
+		<th>detail</th>
+		<th>type</th>
+		<th>local</th>
+		<tr th:each="product : ${list}">
+			<td th:text="${product.productCode}">1</td>
+			<td>
+				<a th:text="${product.productName}" th:href="@{/product/productDetail(productCode=${product.productCode})}"></a>
+			</td>
+			<td><p th:text="${product.productPrice}"></p></td>	
+			<td><p th:text="${product.productDetail}"></p></td>	
+			<td><p th:text="${product.categoryTypeCode}"></p></td>	
+			<td><p th:text="${product.categoryLocalCode}"></p></td>	
+		</tr>
+	</table>
+	<a th:href="@{/product/productInsert}">등록</a> </br>
+	  <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+    <a th:if="${page != nowPage}" th:href="@{/product/productList(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+    <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+</th:block>
+<form th:action="@{/product/productList}" method="get">
+    <input type="text" name="searchKeyword">
+    <button type="submit">검색</button>
+</form>
+</body>
+
+</html>

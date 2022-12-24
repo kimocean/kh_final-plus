@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>로그인</title>
+</head>
+<body>
+	<h1>로그인</h1>
+	<div th:if="${param.error}">로그인 실패</div>
+	<div th:if="${param.logout}">로그아웃 완료</div>
+	<form th:action="@{/login}" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		<div>
+			<label> 아이디 : <input type="text" name="username" /></label>
+		</div>
+		<br>
+		<div>
+			<label> 비밀번호 : <input type="password" name="password" /></label>
+		</div>
+		<br>
+		<div>
+			<input type="submit" value="로그인" onclick="location.href='/home';" />
+			<input type="button" onclick="location.href='/signup';" value="회원가입" />
+		</div>
+	</form>
+</body>
+</html>

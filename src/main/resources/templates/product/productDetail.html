@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품 상세</title>
+</head>
+<body>
+  <h1 th:text="${product.productName}"></h1>
+  <p th:text="${product.productPrice}"></p>
+  <p th:text="${product.productDetail}"></p>
+  <a th:href="@{/product/productUpdate/{productCode}(productCode=${product.productCode})}">글 수정</a>
+<a th:href="@{/product/productDelete?(productCode=${product.productCode})}">글 삭제</a>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 리스트 페이지</title>
+</head>
+    <style>
+        .layout{
+        width : 500px;
+        margin: 0 auto;
+        margin-top :40px;
+        }
+    </style>
+<body>
+  <div class="layout">
+      <table>
+          <thead>
+                <tr>
+                    <th>글 번호 </th>
+                    <th>글 제목 </th>
+                    <th>조회 수 </th>
+                </tr>
+          </thead>
+          <tbody>
+              <tr th:each="board : ${list}">
+                  <td th:text="${board.boardNo}">1</td>
+                  <td>
+                      <a th:text="${board.boardTitle}" th:href="@{/board/boardDetail/{boardNo}(boardNo=${board.boardNo})}"></a>
+                  </td>
+                  <td th:text="${board.boardView}"></td>
+              </tr>
+          </tbody>
+      </table>
+      <a th:href="@{/board/boardInsert}">글 작성</a>
+  </div>
+  <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+    <a th:if="${page != nowPage}" th:href="@{/board/boardList(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+    <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+</th:block>
+<form th:action="@{/board/boardList}" method="get">
+    <input type="text" name="searchKeyword">
+    <button type="submit">검색</button>
+</form>
+</body>
+</html>

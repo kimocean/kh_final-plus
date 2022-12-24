@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<title>회원 가입</title>
+	<script src="https://code.jquery.com/jquery-3.6.2.min.js"
+		integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<form id="f_signup" th:action="@{/signup}" method="post" th:object="${memberDTO}">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		일반 회원 <input type="radio" name="authId" id="auth_user" value="3" checked>
+		판매자 <input type="radio" name="authId" id="auth_seller" value="2"> <br>
+		아이디 <input type="text" id="member_id" name="memberId"> </br>
+		비밀번호 <input type="password" id="member_pw" name="memberPw"> </br>
+		비밀번호 확인 <input type="text" id="member_pwck"> </br>
+		이름 <input type="text" id="member_name" name="memberName"> </br>
+		휴대폰 번호 <input type="text" id="member_phone" name="memberPhone"> </br>
+		이메일 <input type="text" id="member_email_l"> @ <input type="text" id="member_email_r"> </br>
+		<input type="hidden" id="member_email" name="memberEmail">
+		주소 <input type="text" id="member_address_l" style="width: 250px;" disabled> <input type="text" id="member_address_r">
+		<input type="hidden" id="member_address" name="memberAddress">
+		<button id="b_address" type="button" onclick="address()">주소 찾기</button> </br>
+		우편번호 <input type="text" id="member_zipcode" name="memberZipcode" disabled> </br>
+		<button type="submit" id="b_signup">가입</button>
+	</form>
+
+</body>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	function address() {
+		new daum.Postcode({
+			oncomplete: function (data) {
+				const member_zipcode = data.zonecode;
+				const member_address_l = data.roadAddress;
+
+				document.getElementById("member_zipcode").value = member_zipcode;
+				document.getElementById("member_address_l").value = member_address_l;
+				document.getElementById("member_address_r").focus();
+			}
+		}).open();
+	}
+
+	$("#b_signup").on("click", function (e) {
+		e.preventDefault();
+		const member_email = document.getElementById("member_email_l").value + "@" + document.getElementById("member_email_r").value;
+		const member_address = document.getElementById("member_address_l").value + " " + document.getElementById("member_address_r").value;
+		$('#member_email').val(member_email);
+		$('#member_address').val(member_address);
+		console.log($('#member_email').val());
+		console.log($('#member_address').val());
+		$("#f_signup").submit();
+	})
+</script>
+
+</html>

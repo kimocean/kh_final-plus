@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 상세</title>
+</head>
+<body>
+<h1 th:text="${product.productName}"></h1>
+<p th:text="${product.productPrice}">
+<p th:text="${product.productDetail}">
+<p th:text="${product.categoryLocalCode}">
+<p th:text="${product.categoryTypeCode}">
+<a href="@{/productUpdate/{productCode}(productCode=${product.productCode})">상품 수정</a>
+<a href="@{/productUpdate?(productCode=${product.productCode})">상품 삭제</a>
+</body>
+</html>

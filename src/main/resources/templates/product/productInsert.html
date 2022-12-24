@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>상품 등록</title>
+</head>
+<body>
+<form action="/product/productInsert" method="post">
+	code <input name="productCode"> </br>
+	name <input name="productName"> </br>
+	price <input name="productPrice"> </br>
+	detail <input name="productDetail"> </br>
+	local <input name="categoryLocalCode"> </br>
+	type <input name="categoryTypeCode"> </br>
+	<button type="submit">등록</button>
+</form>
+</body>
+</html>

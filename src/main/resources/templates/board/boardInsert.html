@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>게시판</title>
+</head>
+<body>
+<form action="/board/boardInsert" method="post">
+	no <input name="boardNo"> <br>
+	title <input name="boardTitle"> <br>
+	content <input name="boardContent"> <br>
+	<button id="b_board" type="submit">등록</button>
+</form>
+</body>
+</html>

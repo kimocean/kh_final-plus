@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!-- 위에 xmlns 하면 타임리프 문법을 쓸수 있다.-->
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세페이지</title>
+</head>
+<body>
+
+<h1 th:text="${board.boardTitle}">제목 입니다.</h1>
+<p th:text ="${board.boardContent}">내용이 들어갈 내용입니다.</p>
+<a th:href="@{/board/boardUpdate/{boardNo}(boardNo=${board.boardNo})}">글 수정</a>
+<a th:href="@{/board/boardDelete?(boardNo=${board.boardNo})}">글 삭제</a>
+	<div class="card-header">댓글</div>
+        <ul id="reply--box" class="list-group" th:each="reply : ${board.replyList}">
+            <li th:id="'reply--' + ${reply.replyNo}" class="list-group-item d-flex justify-content-between">
+                <div th:text="${reply.replyContent}"></div>
+                <div class="d-flex">
+                    <span class="text-monospace mr-1">작성자: &nbsp;</span><div class="text-monospace mr-1" th:text="${reply.member.memberId}"></div>
+                    <button class="badge btn-warning">수정</button><span> | </span>
+                    <button class="badge btn-danger">삭제</button>
+                </div>
+            </li>
+        </ul>
+</body>
+<script>
+let replyIndex = {
+	    init: function () {
+	        $("#reply-btn-save").on("click", () => {
+	            this.replySave();
+	        });
+	    },
+
+	    replySave: function () {
+	        let data = {
+	            content: $("#reply-content").val(),
+	        }
+	        let boardNo = $("#boardNo").val();
+	        console.log(data);
+	        console.log(boardNo);
+	        $.ajax({
+	            type: "POST",
+	            url: `/api/v1/board/${boardId}/reply`,
+	            data: JSON.stringify(data),
+	            contentType: "application/json; charset=utf-8",
+	            dataType: "text"
+	        }).done(function (res) {
+	            alert("댓글작성이 완료되었습니다.");
+	        }).fail(function (err) {
+	            alert(JSON.stringify(err));
+	        });
+	    },
+
+	}
+	replyIndex.init();
+</script>
+</html>
