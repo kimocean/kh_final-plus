@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.meaningfarm.mall.member.MemberAuth;
+
 import lombok.AllArgsConstructor;
 
 @EnableWebSecurity
@@ -28,8 +30,10 @@ public class SecurityConfiguration {
 		/* @formatter:off */
 		http
 			.authorizeRequests()
-				.antMatchers("/", "/home", "/login", "/signup", "/board").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
-//				.antMatchers("/system").hasRole(MemberAuth.SYSTEM.toString()) // SYSTEM 역할을 가지고 있어야 접근 허용
+				.antMatchers("/", "/home", "/login", "/signup", "/board/**", "/product/**", "/header", "/sample", "/static/**").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
+				.antMatchers("/member/adminPage").hasRole(MemberAuth.ADMIN.toString()) // ADMIN 역할을 가지고 있어야 접근 허용
+				.antMatchers("/member/sellerPage").hasRole(MemberAuth.SELLER.toString()) // SELLER 역할을 가지고 있어야 접근 허용
+				.antMatchers("/member/memberPage").hasRole(MemberAuth.USER.toString()) // USER 역할을 가지고 있어야 접근 허용
 //				.antMatchers("/system/create").access("hasRole('" +  MemberAuth.SYSTEM.toString() +  "') and hasAuthority('" + MemberAuthority.OP_CREATE_DATA.toString() + "')") // SYSTEM 역할과 OP_CREATE_DATA 권한을 가지고 있어야 접근 허용
 //				.antMatchers("/system/delete").access("hasRole('" +  MemberAuth.SYSTEM.toString() +  "') and hasAuthority('" + MemberAuthority.OP_DELETE_DATA.toString() + "')")
 				.anyRequest().authenticated() // 그 외 모든 리소스를 의미하며 인증 필요
@@ -47,7 +51,7 @@ public class SecurityConfiguration {
 				.invalidateHttpSession(true) // 로그아웃 시 세션 종료
 				.clearAuthentication(true) // 로그아웃 시 권한 제거
 				.and()
-				.exceptionHandling()
+			.exceptionHandling()
 				.accessDeniedPage("/accessDenied")
 //			.csrf()
 //				.ignoringAntMatchers("/board")

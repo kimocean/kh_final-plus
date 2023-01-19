@@ -1,28 +1,27 @@
 package com.meaningfarm.mall.board;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.meaningfarm.mall.reply.Reply;
 
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "board")
+@SequenceGenerator(
+	name="SEQ_BOARD_NO",
+	sequenceName = "SEQ_BOARD_NO",
+	initialValue=1, allocationSize=1
+)
 public class Board {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD_NO")
 	@Column(name = "board_no")
 	private Integer boardNo;
 	
@@ -35,9 +34,11 @@ public class Board {
 	@Column(name = "board_view", columnDefinition = "number default 0", nullable = false)
 	private Integer boardView;
 	
-	@OrderBy("replyNo desc")
-	@JsonIgnoreProperties({"board"})
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
-	private List<Reply> replyList;
+//	@OrderBy("replyNo desc")
+//	@JsonIgnoreProperties({"board"})
+//	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+//	private List<Reply> replyList;
+	
+	
 	
 }

@@ -8,35 +8,149 @@
 		integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 </head>
 
+<style>
+.s_container {
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+}
+.s_radio {
+	margin-top: 15px;
+}
+table {
+	width: 800px;
+	margin: 0 auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 2px;
+}
+</style>
+
 <body>
-	<form id="f_signup" th:action="@{/signup}" method="post" th:object="${memberDTO}">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		일반 회원 <input type="radio" name="authId" id="auth_user" value="3" checked>
-		판매자 <input type="radio" name="authId" id="auth_seller" value="2"> <br>
-		아이디 <input type="text" id="member_id" name="memberId"> </br>
-		비밀번호 <input type="password" id="member_pw" name="memberPw"> </br>
-		비밀번호 확인 <input type="text" id="member_pwck"> </br>
-		이름 <input type="text" id="member_name" name="memberName"> </br>
-		휴대폰 번호 <input type="text" id="member_phone" name="memberPhone"> </br>
-		이메일 <input type="text" id="member_email_l"> @ <input type="text" id="member_email_r"> </br>
+	<header id="header"></header>
+	<div class="s_container">
+		<form id="f_signup" th:action="@{/signup}" method="post" th:object="${memberDTO}">
+			<div class="s_radio">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				일반 회원 <input type="radio" class="form-check-input" name="authId" id="auth_user" value="3" checked>
+				판매자 <input type="radio" class="form-check-input" name="authId" id="auth_seller" value="2"> <br>
+			</div>
+		<table>
+			<colgroup>
+				<col style="width: 15%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 5%;">
+
+				<col style="width: 5%;">
+				<col style="width: 5%;">
+				<col style="width: 5%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+
+				<col style="width: 10%;">
+				<col style="width: 5%;">
+			</colgroup>
+			<tr>
+				<td>아이디</td>
+				<td colspan="11"><input type="text" class="form-control" id="member_id" name="memberId"></td>
+				<td colspan="0">
+					<!-- <button id="b_idcheck" class="btn btn-secondary" type="button" onclick="idCheck()">중복확인</button>
+					<input class="btn btn-outline-success btn-sm reType" type="button" id="resetUsername" onclick="reUsername()" disabled value="다시입력"/>  -->
+				</td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td colspan="3"><input type="text" class="form-control" id="member_pw" name="memberPw" placeholder="영문, 숫자, 특문 8~20자" maxlength="20"></td>
+				<td><i class="" id="pw_check"></i></td>
+				<td colspan="3">비밀번호 확인</td>
+				<td colspan="3"><input type="text" class="form-control" id="member_pwck" maxlength="20"></td>
+				<td><i class="" id="pwck_check"></i></td>
+			</tr>
+			<tr>
+				<td>이름</td> 	
+				<td colspan="4"><input type="text" class="form-control" id="member_name" name="memberName"></td>
+				<td colspan="3">휴대폰</td>
+				<td colspan="4"><input type="text" class="form-control" id="member_phone" name="memberPhone" placeholder="- 없이 숫자만 입력" maxlength="11"></td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td colspan="4"><input type="text" class="form-control" id="member_email_l"></td>
+				<td>@</td>
+				<td colspan="6">
+					<select class="form-select" id="member_email_r">
+						<option value="" selected>직접 입력</option>
+						<option value="naver.com">naver.com</option>
+						<option value="daum.net">daum.net</option>
+						<option value="gmail.com">gmail.com</option>
+						<option value="nate.com">nate.com</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2">주소</td>
+				<td colspan="4"><input type="text" class="form-control" id="member_zipcode" name="memberZipcode" disabled></td>
+				<td colspan="5"><input type="text" class="form-control" id="member_address_l" disabled></td>
+				<td colspan="2"><button id="b_address" class="btn btn-secondary" type="button" onclick="address()">주소검색</button></td>
+			</tr>
+			<tr>
+				<td colspan="11"><input type="text" class="form-control" id="member_address_r"></td>
+			</tr>
+			<!-- 아이디 <input type="text" class="form-control" id="member_id" name="memberId"> </br>
+			비밀번호 <input type="password" class="form-control" id="member_pw" name="memberPw"> </br>
+			비밀번호 확인 <input type="text" class="form-control" id="member_pwck"> </br>
+			이름 <input type="text" class="form-control" id="member_name" name="memberName"> </br>
+		휴대폰 번호 <input type="text" class="form-control" id="member_phone" name="memberPhone"> </br>
+		이메일 <input type="text" class="form-control" id="member_email_l">
+		@
+		<select class="form-select" id="member_email_r">
+			<option value="" selected>직접 입력</option>
+			<option value="naver.com">naver.com</option>
+			<option value="daum.net">daum.net</option>
+			<option value="gmail.com">gmail.com</option>
+			<option value="nate.com">nate.com</option>
+		</select><br>
 		<input type="hidden" id="member_email" name="memberEmail">
-		주소 <input type="text" id="member_address_l" style="width: 250px;" disabled> <input type="text" id="member_address_r">
+		주소 <input type="text" class="form-control" id="member_address_l" style="width: 250px;" disabled>
+		<input type="text" class="form-control" id="member_address_r">
 		<input type="hidden" id="member_address" name="memberAddress">
-		<button id="b_address" type="button" onclick="address()">주소 찾기</button> </br>
-		우편번호 <input type="text" id="member_zipcode" name="memberZipcode" disabled> </br>
-		<button type="submit" id="b_signup">가입</button>
-	</form>
+		<button id="b_address" class="btn btn-secondary" type="button" onclick="address()">주소 찾기</button> </br>
+		우편번호 <input type="text" class="form-control" id="member_zipcode" name="memberZipcode" disabled> </br> -->
+	</table>
+	<button type="submit" id="b_signup" class="btn btn-warning">가입</button>
+	<button class="b_detail btn btn-danger" type="button" onclick="location.href='javascript:history.back();'">취소</button>
+</form>
+</div>
 
 </body>
 
+<!-- <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/24dbe51f07.js" crossorigin="anonymous"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script>
+
+$(document).ready(function() {
+	
+	// header, footer 불러오기 시작
+	
+	$('#header').load("../header")
+	// $('#footer').load("../footer")
+	
+	// header, footer 불러오기 끝
+})
+	
+	// 주소 API 시작
 	function address() {
 		new daum.Postcode({
 			oncomplete: function (data) {
 				const member_zipcode = data.zonecode;
 				const member_address_l = data.roadAddress;
-
+				
 				document.getElementById("member_zipcode").value = member_zipcode;
 				document.getElementById("member_address_l").value = member_address_l;
 				document.getElementById("member_address_r").focus();
@@ -54,6 +168,86 @@
 		console.log($('#member_address').val());
 		$("#f_signup").submit();
 	})
+		// 주소 API 끝
+
+		// 아이디 중복 검사 시작
+		function idCheck() {
+			const member_id = $("#member_id").val();
+			if (member_id == "") {
+					alert("아이디를 입력해주세요.");
+					$("#member_id").focus();
+					return false;
+			}
+
+    	$.ajax({
+        type: "get",
+        url: "/api/overlap/usernameRegister",
+        data: {"memberId": member_id},
+        dataType: "JSON",
+        success: function (result) {
+        	if (result.result == "0") {
+          	if (confirm("이 아이디는 사용 가능합니다. \n사용하시겠습니까?")) {
+							memberIdOverlapCheck = 1;
+							$("#member_id").attr("readonly", true);
+							$("#b_idcheck").attr("disabled", true);
+							$("#b_idcheck").css("display", "none");
+							$("#resetUsername").attr("disabled", false);
+							$("#resetUsername").css("display", "inline-block");
+            }
+            return false;
+          } else if (result.result == "1") {
+						alert("이미 사용중인 아이디입니다.");
+						$("#member_id").focus();
+          } else {
+          	alert("success이지만 result 값이 undefined 잘못됨");
+          }
+        },
+        error: function (request, status,error) {
+        	alert("ajax 실행 실패");
+          console.log("code:" + request.status + "\n" + "error :" + error);
+        }
+    	});
+		}
+		// 아이디 중복 검사 끝
+		
+		// 비밀번호 영문+숫자+특수문자인지 끝
+		function pwCheck() {
+			let reg = new RegExp("^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+			// let reg = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
+			const member_pw = document.getElementById('member_pw').value;
+			console.log(member_pw)
+			console.log(reg.test(member_pw));
+			if(!reg.test(member_pw)) {
+				document.getElementById('pw_check').className = "fa-solid fa-xing";
+			} else if(reg.test(member_pw)) {
+				document.getElementById('pw_check').className = "fa-solid fa-check";
+			}
+		} // end of pwCheck
+
+		document.getElementById("member_pw").addEventListener("keyup", (e) => {
+			pwCheck();
+			pwck();
+		})
+		// 비밀번호 영문+숫자+특수문자인지 끝
+
+		// 비밀번호 === 비밀번호 확인 시작
+
+		function pwck() {
+			let member_pw = document.getElementById('member_pw').value;
+			let member_pwck = document.getElementById('member_pwck').value;
+			if(member_pw === member_pwck) {
+				document.getElementById('pwck_check').className = "fa-solid fa-check";
+			} else if(member_pw != member_pwck) {
+				document.getElementById('pwck_check').className = "fa-solid fa-xing";
+			}
+		} // end of pwck
+
+		document.getElementById("member_pwck").addEventListener("keyup", (e) => {
+			pwck();
+		})
+
+		// 비밀번호 === 비밀번호 확인 끝
+
 </script>
 
 </html>

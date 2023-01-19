@@ -30,7 +30,7 @@ public class BoardController {
 	
     @GetMapping("/boardList")
     public String boardList(Model model,
-    		@PageableDefault(page = 0, size = 1, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable,
+    		@PageableDefault(page = 0, size = 10, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable,
     		String searchKeyword){
     	Page<Board> pageList = null;
     	if(searchKeyword == null) {
@@ -58,7 +58,6 @@ public class BoardController {
 	
 	@PostMapping("/boardInsert")
 		public String boardInsert(Board board) {
-		System.out.println(board);
 		boardService.boardInsert(board); 
 		return "redirect:/board/boardList";
 	}

@@ -36,5 +36,13 @@
         <!--객체의 권한-->
         <b>Authenticated user role:</b>
         <div sec:authentication="principal.authorities"></div>
+
+        <h3 sec:authorize="hasRole('ADMIN')">Has ADMIN Role</h3>
+  <h3 sec:authorize="hasRole('ROLE_ADMIN')">Has ADMIN Role</h3>
+  <h3 sec:authorize="hasRole('SELLER')">Has SELLER Role</h3>
+  <h3 sec:authorize="hasRole('ROLE_SELLER')">Has SELLER Role</h3>
+  <h3 sec:authorize="hasRole('USER')">Has USER Role</h3>
+  <h3 sec:authorize="hasRole('ROLE_USER')">Has USER Role</h3>
+
 </body>
 </html>

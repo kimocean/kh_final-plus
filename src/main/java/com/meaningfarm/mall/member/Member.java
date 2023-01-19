@@ -1,6 +1,5 @@
 package com.meaningfarm.mall.member;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,12 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
-
-import com.meaningfarm.mall.reply.Reply;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -55,8 +51,8 @@ public class Member {
 	@JoinTable(name = "auth_member", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "auth_id"))
 	private Set<Auth> auths;
 	
-	@OneToMany(mappedBy = "member")
-	private List<Reply> replyList;
+//	@OneToMany(mappedBy = "member")
+//	private List<Reply> replyList;
  
 	@Builder
 	public Member(String memberId, String memberPw, String memberName, String memberPhone, String memberEmail, 
